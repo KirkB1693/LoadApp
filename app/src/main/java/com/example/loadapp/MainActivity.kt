@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-
         custom_button.setOnClickListener {
             // Get the checked radio button id from radio group
             var id: Int = radioGroup.checkedRadioButtonId
