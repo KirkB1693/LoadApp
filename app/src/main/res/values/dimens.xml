@@ -5,4 +5,5 @@
     <dimen name="textSize">18sp</dimen>
     <dimen name="strokeWidth">4dp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_progress_bar_size">60dp</dimen>
 </resources>

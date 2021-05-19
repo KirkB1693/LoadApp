@@ -11,7 +11,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.core.content.withStyledAttributes
-import timber.log.Timber
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -157,10 +156,7 @@ class LoadingButton @JvmOverloads constructor(
 
         if (buttonState == ButtonState.Completed) {
             drawBaseButton(canvas)
-            Timber.i("Drawing base button")
         } else {
-            val percentForDisplay = (loadingPercentage * 100).toInt()
-            Timber.i("Button animation, percentage : $percentForDisplay")
             drawLoadingBackground(canvas)
             drawLoadingAnimation(canvas)
             // draw text after animation so text stays visible
