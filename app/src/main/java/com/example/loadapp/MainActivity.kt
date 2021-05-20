@@ -10,7 +10,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,8 +21,6 @@ import com.example.loadapp.constants.Constants.RETROFIT_SIZE
 import com.example.loadapp.constants.Constants.RETROFIT_URL
 import com.example.loadapp.databinding.ActivityMainBinding
 import com.example.loadapp.utils.sendNotification
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,30 +43,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         Timber.plant(Timber.DebugTree())
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        custom_button.setOnClickListener {
+        binding.includeMainContent.loadingButton.setOnClickListener {
             // Get the checked radio button id from radio group
-            val id: Int = radioGroup.checkedRadioButtonId
+            val id: Int = binding.radioGroup.checkedRadioButtonId
             if (id != -1) {
                 disableLoadingButton()
                 // If any radio button checked from radio group
                 // Get the instance of radio button using id
                 val radio: RadioButton = findViewById(id)
                 when (radio) {
-                    radioButtonGlide -> applicationScope.launch {
+                    binding.radioButtonGlide -> applicationScope.launch {
                         downloadFilename = resources.getString(R.string.radio_button_glide_download)
                         download(GLIDE_URL, GLIDE_SIZE)
                     }
-                    radioButtonLoadApp -> applicationScope.launch {
+                    binding.radioButtonLoadApp -> applicationScope.launch {
                         downloadFilename = resources.getString(R.string.radio_button_load_app_download)
                         download(LOAD_APP_URL, LOAD_APP_SIZE)
                     }
-                    radioButtonRetrofit -> applicationScope.launch {
+                    binding.radioButtonRetrofit -> applicationScope.launch {
                         downloadFilename = resources.getString(R.string.radio_button_retrofit_download)
                         download(RETROFIT_URL, RETROFIT_SIZE)
                     }
@@ -95,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun disableLoadingButton() {
-        custom_button.isEnabled = false
+        binding.includeMainContent.loadingButton.isEnabled = false
     }
 
     private val receiver = object : BroadcastReceiver() {
@@ -132,8 +129,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun download(url: String, bytesTotal: Long) {
-        runOnUiThread { custom_button.setCustomButtonState(ButtonState.Clicked)
-        progressBar.visibility = View.VISIBLE }
+        runOnUiThread { binding.includeMainContent.loadingButton.setCustomButtonState(ButtonState.Clicked)
+        binding.progressBar.visibility = View.VISIBLE }
         val request =
             DownloadManager.Request(Uri.parse(url))
                 .setTitle(getString(R.string.app_name))
@@ -149,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
 
         downloading = true
-        runOnUiThread { custom_button.setCustomButtonState(ButtonState.Loading) }
+        runOnUiThread { binding.includeMainContent.loadingButton.setCustomButtonState(ButtonState.Loading) }
 
         Timber.i("Download starting...")
         var downloadProgress: Int
@@ -173,7 +170,7 @@ class MainActivity : AppCompatActivity() {
                 if (downloadProgress > 100) {
                     downloadProgress = 100
                 }
-                runOnUiThread { custom_button.setLoadingPercentage(downloadProgress / 100f) }
+                runOnUiThread { binding.includeMainContent.loadingButton.setLoadingPercentage(downloadProgress / 100f) }
                 oldDownloadProgress = downloadProgress
             }
             Timber.i("Download at $downloadProgress percent")
@@ -192,8 +189,8 @@ class MainActivity : AppCompatActivity() {
             Thread.sleep(2500)
             runOnUiThread {
                 enableLoadingButton()
-                custom_button.setCustomButtonState(ButtonState.Completed)
-                progressBar.visibility = View.GONE
+                binding.includeMainContent.loadingButton.setCustomButtonState(ButtonState.Completed)
+                binding.progressBar.visibility = View.GONE
             }
         }
         val statusMessage = getDownloadStatus(downloadStatus)
@@ -253,7 +250,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun enableLoadingButton() {
-        custom_button.isEnabled = true
+        binding.includeMainContent.loadingButton.isEnabled = true
     }
 
     private fun getDownloadStatus(status: Int): String {

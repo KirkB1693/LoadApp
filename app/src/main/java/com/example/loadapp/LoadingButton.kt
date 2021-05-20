@@ -26,7 +26,7 @@ class LoadingButton @JvmOverloads constructor(
     private val ovalLocation = RectF()
 
     // Initialize drawing measurements.
-    private val cornerRadius = (7f * resources.displayMetrics.density).roundToInt();
+    private val cornerRadius = (7f * resources.displayMetrics.density).roundToInt()
 
     private val valueAnimatorForWidth = ValueAnimator()
     private val valueAnimatorForAngle = ValueAnimator()
@@ -41,7 +41,7 @@ class LoadingButton @JvmOverloads constructor(
 
     private var loadingPercentage = 0f
 
-    private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
+    private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { _, _, new ->
         when (new) {
             ButtonState.Clicked -> startButtonAnimation()
             ButtonState.Loading -> continueButtonAnimation()
@@ -144,10 +144,6 @@ class LoadingButton @JvmOverloads constructor(
     }
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = buttonLoadingCircleColor
-    }
-
-    override fun performClick(): Boolean {
-        return super.performClick()
     }
 
 
@@ -264,7 +260,7 @@ class LoadingButton @JvmOverloads constructor(
         setLoadingPercentage(adjustedPercentage, true)
     }
 
-    fun setLoadingPercentage(percentage: Float, animate: Boolean) {
+    private fun setLoadingPercentage(percentage: Float, animate: Boolean) {
 
         if (animate) {
             if (percentage > oldPercentage) {

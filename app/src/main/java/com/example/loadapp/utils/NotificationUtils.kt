@@ -18,7 +18,6 @@ import com.example.loadapp.constants.Constants.CHANNEL_ID
 import com.example.loadapp.constants.Constants.DOWNLOAD_FILENAME
 import com.example.loadapp.constants.Constants.DOWNLOAD_STATUS
 import com.example.loadapp.constants.Constants.NOTIFICATION_ID
-import java.util.*
 
 
 fun NotificationManager.sendNotification(
@@ -85,11 +84,6 @@ fun NotificationManager.sendNotification(
     notify(notificationId, builder.build())
 }
 
-fun generateRandom(): Int {
-    val random = Random()
-    return random.nextInt(9999 - 1000) + 1000
-}
-
 @TargetApi(Build.VERSION_CODES.O)
 private fun isNotificationChannelAvailable(
     notificationManager: NotificationManager
@@ -106,6 +100,3 @@ fun createNotificationChannel(
     notificationManager.createNotificationChannel(channel)
 }
 
-fun NotificationManager.cancelNotifications() {
-    cancelAll()
-}

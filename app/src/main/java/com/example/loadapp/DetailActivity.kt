@@ -10,8 +10,6 @@ import com.example.loadapp.constants.Constants.DOWNLOAD_FILENAME
 import com.example.loadapp.constants.Constants.DOWNLOAD_STATUS
 import com.example.loadapp.constants.Constants.NOTIFICATION_ID
 import com.example.loadapp.databinding.ActivityDetailBinding
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.content_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -20,10 +18,8 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_detail)
-        setSupportActionBar(toolbar)
-
-
+        setContentView(binding.root)
+        setSupportActionBar(binding.detailToolbar)
 
         if (intent != null) {
             val status = intent.getStringExtra(DOWNLOAD_STATUS)
@@ -31,12 +27,12 @@ class DetailActivity : AppCompatActivity() {
             val notificationId = intent.getIntExtra(NOTIFICATION_ID, 0)
             NotificationManagerCompat.from(application).cancel(notificationId)
 
-            filename_textview.text = filename
-            status_textview.text = status
+            binding.includeDetailContent.filenameTextview.text = filename
+            binding.includeDetailContent.statusTextview.text = status
             if (status.equals(resources.getString(R.string.download_status_failure))) {
-                status_textview.setTextColor(ContextCompat.getColor(this, R.color.red))
+                binding.includeDetailContent.statusTextview.setTextColor(ContextCompat.getColor(this, R.color.red))
             } else {
-                status_textview.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                binding.includeDetailContent.statusTextview.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
             }
 
         }

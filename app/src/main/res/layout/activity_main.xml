@@ -38,7 +38,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -48,7 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
-                android:id="@+id/downloadImageView"
+                android:id="@+id/downloadImage"
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
                 android:layout_marginTop="56dp"
@@ -104,7 +103,7 @@
             </RadioGroup>
 
             <include
-                android:id="@+id/include"
+                android:id="@+id/includeMainContent"
                 layout="@layout/content_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
